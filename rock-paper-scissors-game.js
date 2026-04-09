@@ -1,5 +1,10 @@
 
 
+let humanScore = 0;
+let computerScore = 0;
+let roundCount = 0;
+const maxRounds = 5;
+
 function getComputerChoice() {
     let randomChoice = Math.random();
     if (randomChoice < 0.33) {
@@ -11,66 +16,61 @@ function getComputerChoice() {
     }    
 }
 
-function getHumanChoice() {
-    let humanChoice = prompt("Please enter your choice! Chose Rock, Paper, or Scissors to play the game");
-    humanChoice = humanChoice.toLowerCase();
-    return humanChoice;
-}
+// Select the elements
+const buttons = document.querySelectorAll('button');
+const resultsDiv = document.querySelector('#results');
 
+// Add Listener to each button
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        // The Id of the button is our player selection! ("Rock", "Paper", "Scissors")
+        const playerSelection = button.id;
+        const computerSelection = getComputerChoice();
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+        // Play the round and get the result as a string
+        const roundResult = playRound(playerSelection, computerSelection);
 
-    function playRound(humanChoice, computerChoice) {
-    if (humanChoice === computerChoice) {
-        console.log("it's a tie!");
+        // Update the results div with the round result and current scores
+        resultsDiv.textContent = roundResult;
+
+        // Increment the round count
+        roundCount++;
+
+        // Check if we've reached the max rounds
+        if (roundCount >= maxRounds) {
+            showFinalScore();
+            // Disable buttons after the game is over
+            buttons.forEach((btn) => btn.disabled = true);
+        }
+   });
+});
+
+    function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) {
+        return "it's a tie!";
     } else if (
-        (humanChoice === "rock" && computerChoice === "scissors") ||
-        (humanChoice === "paper" && computerChoice === "rock") ||
-        (humanChoice === "scissors" && computerChoice === "paper")
+        (playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "paper" && computerSelection === "rock") ||
+        (playerSelection === "scissors" && computerSelection === "paper")
     ) {
         humanScore++;
-        console.log(`You Win! ${humanChoice} beats ${computerChoice}`);
+        return `You Win! ${playerSelection} beats ${computerSelection}`;
     } else {
         computerScore++;
-        console.log(`You Lose ${computerChoice} beats ${humanChoice}`);
+        return `You Lose! ${computerSelection} beats ${playerSelection}`;
     }
 }
 
-// 3. Round 1
-  const humanSelection1 = getHumanChoice();
-  const computerSelection1 = getComputerChoice();
-  playRound(humanSelection1, computerSelection1);
-
-  // 3. Round 2
-  const humanSelection2 = getHumanChoice();
-  const computerSelection2 = getComputerChoice();
-  playRound(humanSelection2, computerSelection2);
-
-  // 3. Round 3
-  const humanSelection3 = getHumanChoice();
-  const computerSelection3 = getComputerChoice();
-  playRound(humanSelection3, computerSelection3);
-
-  // 3. Round 4
-  const humanSelection4 = getHumanChoice();
-  const computerSelection4 = getComputerChoice();
-  playRound(humanSelection4, computerSelection4);
-
-  // 3. Round 5
-  const humanSelection5 = getHumanChoice();
-  const computerSelection5 = getComputerChoice();
-  playRound(humanSelection5, computerSelection5);
-
+function showFinalScore() {
+    let message;
   if (humanScore > computerScore) {
-    console.log("Congratulations! You won the game!");
+    message = "Congratulations! You won the game!";
   } else if (humanScore < computerScore) {
-    console.log("Game over! The computer won.");
+    message = "Game over! The computer won.";
   } else {
-    console.log("The game ended in a draw.");
+    message = "The game ended in a draw.";
   }
   // Final Tally
-    console.log("Final Scores - Your Score is:" + humanScore + " Computer score is:" + computerScore);
+    message += ` Final Scores - Your Score is: ${humanScore}, Computer Score is: ${computerScore}`;
+    resultsDiv.textContent = message;
 }
-playGame();
