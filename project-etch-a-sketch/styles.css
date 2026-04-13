@@ -1,0 +1,25 @@
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 960px;
+    height: 960px;
+    border: 2px solid black;
+
+}
+
+.square {
+    box-sizing: border-box;
+    border: 0.1px solid #eee;
+}
+
+#reset {
+    display: block;
+    margin: 20px auto;  /* 20px space on top/bottom, centered left/right */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
