@@ -8,6 +8,13 @@ resetBtn.addEventListener('click', () => {
     createGrid(size);
 });
 
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 function createGrid(size) {
     // Clear the container first. (This is important for resizing later)
     container.innerHTML = '';
@@ -23,9 +30,19 @@ function createGrid(size) {
         square.style.width = `${squareSize}px`;
         square.style.height = `${squareSize}px`;
 
-        // The Hower Effect
+        // Set the Initial state: transparent and assign a random color once.
+        square.style.backgroundColor = getRandomColor();
+        square.style.opacity = "0";
+
+        // The Interaction through Hower Effect
         square.addEventListener('mouseover', () => {
-            square.style.backgroundColor = 'black';
+            // Get current opacity and turn it into a number.
+            let currentOpacity = parseFloat(square.style.opacity);
+
+            // If it's less than 1 (100%), add 0.1 (10%).
+            if (currentOpacity < 1) {
+                square.style.opacity = (currentOpacity + 0.1).toString();
+            }
         });
 
         container.appendChild(square);

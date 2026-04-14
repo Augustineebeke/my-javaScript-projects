@@ -3,13 +3,14 @@
     flex-wrap: wrap;
     width: 960px;
     height: 960px;
-    border: 2px solid black;
-
+    border: 3px solid green;
+    background-color: #000; /* This makes the "un-inked" squares look black/empty */
+    margin: 0 auto;
 }
 
 .square {
     box-sizing: border-box;
-    border: 0.1px solid #eee;
+    border: 0.1px solid rgba(255, 255, 255, 0.05);
 }
 
 #reset {
@@ -22,4 +23,8 @@
     color: white;
     border: none;
     border-radius: 7px;
+}
+
+#reset:hover {
+    background-color: #45a049; /* Darker green when hovering */
 }
